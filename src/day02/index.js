@@ -34,8 +34,23 @@ const part1 = (rawInput) => {
 
 const part2 = (rawInput) => {
   const input = parseInput(rawInput);
-
-  return;
+  const lines = input.split("\n");
+  let sum = 0;
+  for (let game of lines) {
+    let rgb = { red: -Infinity, blue: -Infinity, green: -Infinity };
+    let list = game
+      .replace(/Game \d+:/, "")
+      .split(";")
+      .map((e) => e.trim().split(","))
+      .forEach((e) => {
+        e.forEach((v) => {
+          let [amt, color] = v.trim().split(" ");
+          rgb[color] = Math.max(rgb[color], amt);
+        });
+      });
+    sum += Object.values(rgb).reduce((a, e) => a * e);
+  }
+  return sum;
 };
 
 run({
