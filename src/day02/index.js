@@ -38,7 +38,7 @@ const part2 = (rawInput) => {
   let sum = 0;
   for (let game of lines) {
     let rgb = { red: -Infinity, blue: -Infinity, green: -Infinity };
-    let list = game
+    game
       .replace(/Game \d+:/, "")
       .split(";")
       .map((e) => e.trim().split(","))
