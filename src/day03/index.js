@@ -75,6 +75,7 @@ const part2 = (rawInput) => {
   }
   return sum;
 };
+
 function checkGears(x, y, grid, gears) {
   const xLen = grid[0].length - 1;
   const yLen = grid.length - 1;
@@ -113,6 +114,7 @@ function checkGears(x, y, grid, gears) {
     }
   }
 }
+
 function getStart(x, y, grid) {
   if (x === 0) return x;
   let row = grid[y];
