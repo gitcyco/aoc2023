@@ -10,7 +10,6 @@ const part1 = (rawInput) => {
     green: 13,
     blue: 14,
   };
-  // const games = {};
   let sum = 0;
   for (let game of lines) {
     let addGame = true;
