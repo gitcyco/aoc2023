@@ -98,6 +98,7 @@ Both parts: 3.589ms
 ```
 Day 05
 (I just hardcoded the answer to force this tool to update, solved outside of this, part2 took about 40 minutes to complete)
+Optimized a bit more took about 3 minutes
 Time part 1: 0.943ms
 Time part 2: -
 Both parts: 0.943ms

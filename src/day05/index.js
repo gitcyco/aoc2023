@@ -47,6 +47,24 @@ function getDist(current, paths, map) {
   return current;
 }
 
+function reverseGetDist(current, paths, map) {
+  let val;
+  for (let route of paths) {
+    const mapping = map[route];
+    const { maps } = mapping;
+    let found = false;
+    for (let item of maps) {
+      const [src, dest, range] = item;
+      if (current < src + range && current >= src) {
+        val = dest + (current - src);
+        found = true;
+      }
+    }
+    if (found) current = val;
+  }
+  return current;
+}
+
 function mapInput(lines) {
   const rawMaps = lines.slice(1).filter((e) => e);
   const map = {};
@@ -76,7 +94,7 @@ const part2 = (rawInput) => {
     "temperature",
     "humidity",
   ];
-
+  const revPaths = paths.slice(0).reverse();
   const sources = lines[0]
     .replace("seeds:", "")
     .trim()
@@ -89,21 +107,32 @@ const part2 = (rawInput) => {
   console.log(ranges);
   const map = mapInput(lines);
   let min = Infinity;
+  let i = 0;
+  while (true) {
+    const seed = reverseGetDist(i, revPaths, map);
+    for (let [start, end] of ranges) {
+      if (seed >= start && seed <= start + end) {
+        return i;
+      }
+    }
+    i++;
+  }
+  return min;
   //
   // lol brute force isn't going to work: (it worked but took a long time)
-  for (let [start, end] of ranges) {
-    const startTime = performance.now();
-    for (let i = 0; i < end; i++) {
-      const location = getDist(start + i, paths, map);
-      min = Math.min(min, location);
-    }
-    const endTime = performance.now();
-    console.log(
-      `Finished space ${start}->${end} with MIN: ${min} in ${
-        (endTime - startTime) / 1000
-      } seconds`,
-    );
-  }
+  // for (let [start, end] of ranges) {
+  //   const startTime = performance.now();
+  //   for (let i = 0; i < end; i++) {
+  //     const location = getDist(start + i, paths, map);
+  //     min = Math.min(min, location);
+  //   }
+  //   const endTime = performance.now();
+  //   console.log(
+  //     `Finished space ${start}->${end} with MIN: ${min} in ${
+  //       (endTime - startTime) / 1000
+  //     } seconds`,
+  //   );
+  // }
   return min;
 };
 
