@@ -14,8 +14,8 @@
 [![Day](https://badgen.net/badge/01/%E2%98%85%E2%98%85/green)](src/day01)
 [![Day](https://badgen.net/badge/02/%E2%98%85%E2%98%85/green)](src/day02)
 [![Day](https://badgen.net/badge/03/%E2%98%85%E2%98%85/green)](src/day03)
-![Day](https://badgen.net/badge/04/%E2%98%86%E2%98%86/gray)
-![Day](https://badgen.net/badge/05/%E2%98%86%E2%98%86/gray)
+[![Day](https://badgen.net/badge/04/%E2%98%85%E2%98%85/green)](src/day04)
+[![Day](https://badgen.net/badge/05/%E2%98%85%E2%98%86/yellow)](src/day05)
 ![Day](https://badgen.net/badge/06/%E2%98%86%E2%98%86/gray)
 ![Day](https://badgen.net/badge/07/%E2%98%86%E2%98%86/gray)
 ![Day](https://badgen.net/badge/08/%E2%98%86%E2%98%86/gray)
@@ -83,23 +83,24 @@ Both parts: 2.048ms
 
 ```
 Day 03
-Time part 1: 7.525ms
-Time part 2: 10.107ms
-Both parts: 17.632ms
+Time part 1: 7.134ms
+Time part 2: 9.209ms
+Both parts: 16.343ms
 ```
 
 ```
 Day 04
-Time part 1: -
-Time part 2: -
-Both parts: -
+Time part 1: 1.718ms
+Time part 2: 1.872ms
+Both parts: 3.589ms
 ```
 
 ```
 Day 05
-Time part 1: -
+(I just hardcoded the answer to force this tool to update, solved outside of this, part2 took about 40 minutes to complete)
+Time part 1: 0.943ms
 Time part 2: -
-Both parts: -
+Both parts: 0.943ms
 ```
 
 ```
@@ -243,8 +244,8 @@ Both parts: -
 ```
 
 ```
-Total stars: 6/50
-Total time: 28.421ms
+Total stars: 9/50
+Total time: 31.663ms
 ```
 
 <!--/RESULTS-->
