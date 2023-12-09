@@ -102,6 +102,41 @@ const part1 = (rawInput) => {
 // One pair, where two cards share one label, and the other three cards have a different label from the pair and each other: A23A4
 // High card, where all cards' labels are distinct: 23456
 
+function getHigh(hand, points, cards) {
+  let all = Object.entries(hand).sort((a, b) => b[1] - a[1]);
+  const wildCards = "J" in hand ? hand["J"] : 0;
+  let rank = 0;
+  // Five of a kind
+  if (all.length === 1 || (all.length === 2 && wildCards > 0)) {
+    return [1, points, cards];
+  }
+  const highCard = all[0];
+  const secondHigh = all[1];
+  // 4 of a kind OR full house
+  if (all.length === 2) {
+    if (highCard[1] === 4) return [2, points, cards];
+    return [3, points, cards];
+  }
+  if (highCard[1] === 1) {
+    if (wildCards > 0) return [6, points, cards];
+    else return [7, points, cards];
+  }
+  if (highCard[1] === 2) {
+    if (secondHigh[1] === 2) {
+      if (wildCards === 2) return [2, points, cards];
+      if (wildCards === 1) return [3, points, cards];
+      return [5, points, cards];
+    }
+    if (wildCards === 2) return [4, points, cards];
+    if (wildCards === 1) return [4, points, cards];
+    return [6, points, cards];
+  }
+  if (highCard[1] === 3) {
+    if (wildCards === 1) return [2, points, cards];
+    else return [4, points, cards];
+  }
+}
+
 // All of this code is out of hand and needs to be rewritten.
 // There are some edge cases it isn't handling properly, should probably just dump it and rewrite
 // in a much nicer way. As it is its 'if statement hell'.
@@ -189,7 +224,8 @@ const part2 = (rawInput) => {
   const orderKey = order.reverse().reduce((a, e, i) => ((a[e] = i), a), {});
   console.log("key:", orderKey);
   const bestHands = hands.map(([hand, points, cards]) => {
-    let test = getHighest(hand, points, cards);
+    // let test = getHighest(hand, points, cards);
+    let test = getHigh(hand, points, cards);
     return test;
   });
   let sorted = bestHands.sort((a, b) => {

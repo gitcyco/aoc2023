@@ -101,18 +101,18 @@
           "248372045",
           "249606173"
         ],
-        "time": 4.088574
+        "time": 3.763253
       },
       "part2": {
         "solved": false,
-        "result": "248801590",
+        "result": "248943015",
         "attempts": [
           "247638751",
           "249007173",
           "248579839",
           "248743915"
         ],
-        "time": 15.642719
+        "time": 7.493392
       }
     },
     {
@@ -131,16 +131,16 @@
     },
     {
       "part1": {
-        "solved": false,
-        "result": null,
+        "solved": true,
+        "result": "1757008019",
         "attempts": [],
-        "time": null
+        "time": 1.89299
       },
       "part2": {
-        "solved": false,
-        "result": null,
+        "solved": true,
+        "result": "995",
         "attempts": [],
-        "time": null
+        "time": 1.673409
       }
     },
     {
