@@ -6,34 +6,14 @@ const part1 = (rawInput) => {
   const input = parseInput(rawInput);
   const lines = input.split("\n");
   const data = lines.map((e) => e.trim().split(" ").map(Number));
-  let sum = 0;
-  for (let row of data) {
-    let all = [];
-    explore(row, all);
-    let next = 0;
-    for (let item of all) {
-      next += item[item.length - 1];
-    }
-    sum += next + row[row.length - 1];
-  }
-  return sum;
+  return process(data);
 };
 
 const part2 = (rawInput) => {
   const input = parseInput(rawInput);
   const lines = input.split("\n");
   const data = lines.map((e) => e.trim().split(" ").map(Number).reverse());
-  let sum = 0;
-  for (let row of data) {
-    let all = [];
-    explore(row, all);
-    let next = 0;
-    for (let item of all) {
-      next += item[item.length - 1];
-    }
-    sum += next + row[row.length - 1];
-  }
-  return sum;
+  return process(data);
 };
 
 run({
@@ -66,6 +46,18 @@ run({
   trimTestInputs: true,
   onlyTests: false,
 });
+
+function process(data) {
+  let sum = 0;
+  for (let row of data) {
+    let all = [];
+    explore(row, all);
+    let next = 0;
+    for (let item of all) next += item[item.length - 1];
+    sum += next + row[row.length - 1];
+  }
+  return sum;
+}
 
 function explore(arr, all) {
   let out = [];
