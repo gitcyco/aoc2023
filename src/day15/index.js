@@ -52,13 +52,11 @@ const part2 = (rawInput) => {
   let sum = 0;
   for (let i = 0; i < 256; i++) {
     let box = boxes.getBox(i);
-    if (box.length > 0) {
-      for (let slot = 0; slot < box.length; slot++) {
-        let res = i + 1;
-        res *= slot + 1;
-        res *= box[slot];
-        sum += res;
-      }
+    for (let slot = 0; slot < box.length; slot++) {
+      let res = i + 1;
+      res *= slot + 1;
+      res *= box[slot];
+      sum += res;
     }
   }
   console.log(sum);
