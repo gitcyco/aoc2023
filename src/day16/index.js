@@ -105,17 +105,6 @@ const part2 = (rawInput) => {
   let max = -Infinity;
 
   for (let y = 0; y < yLen; y++) {
-    if (y === 0) {
-      max = Math.max(max, processMap([0, -1], "E", lines));
-      max = Math.max(max, processMap([-1, 0], "S", lines));
-      max = Math.max(max, processMap([0, xLen], "W", lines));
-      max = Math.max(max, processMap([-1, xLen - 1], "S", lines));
-    } else if (y === yLen - 1) {
-      max = Math.max(max, processMap([yLen, 0], "N", lines));
-      max = Math.max(max, processMap([yLen - 1, -1], "E", lines));
-      max = Math.max(max, processMap([yLen - 1, xLen], "W", lines));
-      max = Math.max(max, processMap([yLen, xLen - 1], "N", lines));
-    }
     max = Math.max(max, processMap([y, -1], "E", lines));
     max = Math.max(max, processMap([y, xLen], "W", lines));
   }
@@ -124,32 +113,6 @@ const part2 = (rawInput) => {
     max = Math.max(max, processMap([yLen, x], "N", lines));
   }
 
-  // for (let y = 0; y < yLen; y++) {
-  //   for (let x = 0; x < xLen; x++) {
-  //     if (x === 0 && y === 0) {
-  //       max = Math.max(max, processMap([0, -1], "E", lines));
-  //       max = Math.max(max, processMap([-1, 0], "S", lines));
-  //     } else if (x === xLen - 1 && y === 0) {
-  //       max = Math.max(max, processMap([0, xLen], "W", lines));
-  //       max = Math.max(max, processMap([-1, xLen - 1], "S", lines));
-  //     } else if (x === xLen - 1 && y === yLen - 1) {
-  //       max = Math.max(max, processMap([yLen - 1, xLen], "W", lines));
-  //       max = Math.max(max, processMap([yLen, xLen - 1], "N", lines));
-  //     } else if (x === 0 && y === yLen - 1) {
-  //       max = Math.max(max, processMap([yLen - 1, -1], "E", lines));
-  //       max = Math.max(max, processMap([yLen, 0], "N", lines));
-  //     } else if (y === 0) {
-  //       max = Math.max(max, processMap([-1, x], "S", lines));
-  //     } else if (x === 0) {
-  //       max = Math.max(max, processMap([y, -1], "E", lines));
-  //     } else if (y === yLen - 1) {
-  //       max = Math.max(max, processMap([yLen - 1, x], "N", lines));
-  //     } else if (x === xLen - 1) {
-  //       max = Math.max(max, processMap([y, xLen], "W", lines));
-  //     }
-  //   }
-  // }
-  // let output = processMap([0, -1], "E", lines);
   console.log("part 2 output:", max);
   return max;
 };
@@ -238,13 +201,6 @@ function processMap(start, startDir, lines) {
         }
         break;
     }
-
-    // console.log(
-    //   "beam is currently at:",
-    //   beam.current,
-    //   "which is:",
-    //   map[curY][curX],
-    // );
   }
   // console.log("number of affected nodes:", total);
   return total;
