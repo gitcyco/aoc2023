@@ -36,7 +36,6 @@ class Generic {
 class Button {
   constructor(name, counter) {
     this.name = name;
-    this.presses = 0;
     this.counter = counter;
     this.targets = [];
     this.type = "button";
@@ -46,7 +45,6 @@ class Button {
     this.targets.push(target);
   }
   send() {
-    this.presses++;
     for (let target of this.targets) {
       this.counter.inc(this.bit);
       target.input(this.name, this.bit);
@@ -79,12 +77,9 @@ class Broadcaster {
       target.input(this.name, this.bit);
       targetCache.push([target, this.bit]);
     }
-    for (let [target, data] of targetCache) {
-      target.send(data);
+    for (let target of this.targets) {
+      target.send();
     }
-    // for (let target of this.targets) {
-    //   target.send();
-    // }
   }
 }
 
@@ -109,27 +104,14 @@ class Conjunction {
       this.bit = 0;
     } else this.bit = 1;
   }
-  send(bit) {
-    let targetCache = [];
+  send() {
     for (let target of this.targets) {
       this.counter.inc(this.bit);
-      // console.log(
-      //   "my name:",
-      //   this.name,
-      //   "\nmy targets:",
-      //   this.targets,
-      //   "\nTARGET:",
-      //   target,
-      // );
       target.input(this.name, this.bit);
-      targetCache.push([target, this.bit]);
     }
-    for (let [target, data] of targetCache) {
-      target.send(data);
+    for (let target of this.targets) {
+      target.send();
     }
-    // for (let target of this.targets) {
-    //   target.send();
-    // }
   }
 }
 
@@ -146,27 +128,22 @@ class FlipFlop {
     this.targets.push(target);
   }
   input(name, bit) {
-    // this.bit = bit;
+    this.bit = bit;
     if (bit) return;
     // If input bit is 0, flip state
     this.state = this.state ? 0 : 1;
     // Then forward that state to all targets
     // this.send();
   }
-  send(bit) {
-    let targetCache = [];
-    if (bit) return;
+  send() {
+    if (this.bit) return;
     for (let target of this.targets) {
       this.counter.inc(this.state);
       target.input(this.name, this.state);
-      targetCache.push([target, this.state]);
     }
-    for (let [target, data] of targetCache) {
-      target.send(data);
+    for (let target of this.targets) {
+      target.send();
     }
-    // for (let target of this.targets) {
-    //   target.send();
-    // }
   }
 }
 
@@ -205,99 +182,31 @@ const part1 = (rawInput) => {
       name = module.mod;
     }
     module.targets.forEach((target) => {
-      if (!(target in modules)) {
-        modules[target] = new Generic(target);
-      }
       modules[name].setTarget(modules[target]);
-      // console.log("processing module:", modules[target], target);
-      if (target in modules) {
-        if (modules[target].type === "conjunction") {
-          modules[target].setInput(name);
-        }
-      } else {
+      if (modules[target].type === "conjunction") {
+        modules[target].setInput(name);
       }
     });
   }
   const button = new Button("button", counter);
   button.setTarget(modules["broadcaster"]);
-  // button.send(0);
+  button.send(0);
 
   // a updates b before b gets a chance to run with the low signal
   // that was sent from broadcaster
 
-  for (let i = 0; i < 1000; i++) {
-    button.send(0);
-  }
-  // console.log(button, modules, counter);
+  // for (let i = 0; i < 1000; i++) {
+  //   button.send(0);
+  // }
+  console.log(button, modules, counter);
   console.log("OUTPUT TOTAL:", counter.high * counter.low);
-  return counter.high * counter.low;
+  return;
 };
 
 const part2 = (rawInput) => {
   const input = parseInput(rawInput);
-  const lines = input.split("\n").map((spec) => {
-    spec = spec.replace(/\s/g, "");
-    let [mod, targets] = spec.split("->");
-    targets = targets.split(",");
-    return { mod, targets };
-  });
-  const counter = new Counter();
-  const modules = {};
-  for (let module of lines) {
-    if (module.mod === "broadcaster") {
-      modules[module.mod] = new Broadcaster(module.mod, counter);
-    } else if (module.mod[0] === "%") {
-      let name = module.mod.slice(1);
-      modules[name] = new FlipFlop(name, counter);
-    } else if (module.mod[0] === "&") {
-      let name = module.mod.slice(1);
-      modules[name] = new Conjunction(name, counter);
-    } else {
-      modules[module.mod] = new Generic(module.mod);
-    }
-  }
-  for (let module of lines) {
-    let name = "";
-    if (module.mod === "broadcaster") {
-      name = "broadcaster";
-    } else if (module.mod[0] === "%") {
-      name = module.mod.slice(1);
-    } else if (module.mod[0] === "&") {
-      name = module.mod.slice(1);
-    } else {
-      name = module.mod;
-    }
-    module.targets.forEach((target) => {
-      if (!(target in modules)) {
-        modules[target] = new Generic(target);
-      }
-      modules[name].setTarget(modules[target]);
-      // console.log("processing module:", modules[target], target);
-      if (target in modules) {
-        if (modules[target].type === "conjunction") {
-          modules[target].setInput(name);
-        }
-      } else {
-      }
-    });
-  }
-  const button = new Button("button", counter);
-  button.setTarget(modules["broadcaster"]);
-  // button.send(0);
 
-  // a updates b before b gets a chance to run with the low signal
-  // that was sent from broadcaster
-  if (!("rx" in modules)) return;
-  while (modules["rx"].low === 0) {
-    button.send(0);
-  }
-  console.log("NUMBER OF BUTTON PRESSES:", button.presses);
-  // for (let i = 0; i < 1000; i++) {
-  //   button.send(0);
-  // }
-  // console.log(button, modules, counter);
-  console.log("OUTPUT TOTAL:", counter.high * counter.low);
-  return counter.high * counter.low;
+  return;
 };
 
 run({
@@ -326,19 +235,13 @@ run({
   },
   part2: {
     tests: [
-      {
-        input: `
-          broadcaster -> a, b, c
-          %a -> b
-          %b -> c
-          %c -> inv
-          &inv -> a
-        `,
-        expected: "",
-      },
+      // {
+      //   input: ``,
+      //   expected: "",
+      // },
     ],
     solution: part2,
   },
   trimTestInputs: true,
-  onlyTests: false,
+  onlyTests: true,
 });
